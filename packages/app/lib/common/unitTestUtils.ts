@@ -40,11 +40,11 @@ export const createCheckV9Deprecation = (moduleNames: string[]): CheckV9Deprecat
       const firebaseAppDeprecationMessage = warnMessage.includes('Please use `getApp()` instead.');
       if (checkFirebaseAppDeprecationWarning) {
         throw new Error(`Console warn was called unexpectedly with: ${warnMessage}`);
-      }
-
-      if (!firebaseAppDeprecationMessage) {
-        // we want to ignore all firebase app deprecation warnings (e.g. "Please use `getApp()` instead.") unless actually testing for it which we do above
-        throw new Error(`Console warn was called unexpectedly with: ${warnMessage}`);
+      } else {
+        if (!firebaseAppDeprecationMessage) {
+          // we want to ignore all firebase app deprecation warnings (e.g. "Please use `getApp()` instead.") unless actually testing for it which we do above
+          throw new Error(`Console warn was called unexpectedly with: ${warnMessage}`);
+        }
       }
     });
     // Do not call `mockRestore()` unless removing the spy
